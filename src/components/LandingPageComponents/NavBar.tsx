@@ -5,11 +5,8 @@ import Image from "next/image";
 
 export default function NavBar() {
   return (
-
     <div className="fixed top-4 inset-x-0 z-50 max-w-7xl mx-auto px-6">
-
       <nav className="flex justify-between items-center py-3 px-6 rounded-2xl border border-white/20 bg-white/30 backdrop-blur-md shadow-lg">
-        
         <div className="left-nav flex items-center gap-3">
           <div className="logo w-10">
             <Image src={lifeOSLogo} alt="Life OS logo" />
