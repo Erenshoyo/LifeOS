@@ -6,7 +6,7 @@ import Image from "next/image";
 const Footer = () => {
   return (
     <div className="p-5 max-w-7xl mx-auto m-5 ">
-      <footer className="flex justify-between items-center py-3 px-6 rounded-2xl ">
+      <footer className="flex flex-col md:flex-row justify-between items-center py-8 md:py-3 px-6 rounded-2xl gap-8 md:gap-4 text-center md:text-left">
         <div className="left-nav flex items-center gap-3">
           <div className="logo w-10">
             <Image src={lifeOSLogo} alt="Life OS logo" />
@@ -21,17 +21,23 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="right-nav flex items-center gap-8">
+        <div className="right-nav flex flex-col md:flex-row items-center gap-4 md:gap-8">
           <div className="flex gap-6 text-sm font-medium">
-            <span className="text-primary cursor-pointer hover:opacity-70 transition-opacity">
+            <a
+              href="#"
+              className="text-primary cursor-pointer hover:opacity-70 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600 rounded-sm"
+            >
               Privacy Policy
-            </span>
-            <span className="text-primary cursor-pointer hover:opacity-70 transition-opacity">
+            </a>
+            <a
+              href="#"
+              className="text-primary cursor-pointer hover:opacity-70 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600 rounded-sm"
+            >
               Terms of Service
-            </span>
+            </a>
           </div>
 
-          <p className="">© 2026 Life OS. All rights reserved.</p>
+          <p className="text-sm text-zinc-500">© 2026 Life OS. All rights reserved.</p>
         </div>
       </footer>
     </div>

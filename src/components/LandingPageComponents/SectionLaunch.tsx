@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const SectionLaunch = () => {
   return (
@@ -31,12 +32,15 @@ const SectionLaunch = () => {
         </p>
 
         <div className="mt-4 flex flex-col items-center gap-8">
-          <Button
-            size="lg"
-            className="bg-white text-[#002D1C] hover:bg-emerald-50 text-base md:text-lg font-bold h-auto py-5 px-10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all hover:scale-[1.03] active:scale-[0.98] border-none"
-          >
-            Launch Life OS Now
-          </Button>
+          <Link href="/dashboard" className="w-full md:w-auto">
+            <Button
+              asChild
+              size="lg"
+              className="w-full md:w-auto bg-white text-[#002D1C] hover:bg-emerald-50 text-base md:text-lg font-bold h-auto py-5 px-10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all hover:scale-[1.03] active:scale-[0.98] border-none"
+            >
+              <span>Launch Life OS Now</span>
+            </Button>
+          </Link>
 
           <p className="text-sm text-emerald-100/40 font-medium">
             Free forever. No credit card required.
