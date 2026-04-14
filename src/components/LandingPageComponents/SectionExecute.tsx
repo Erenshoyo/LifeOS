@@ -50,7 +50,7 @@ const SectionExecute = () => {
         <p className="text-slate-800">Built for focus, designed for clarity.</p>
       </div>
       {/* Grid layout */}
-      <div className="grid grid-cols-3 max-w-7xl mx-auto gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 max-w-7xl mx-auto gap-4">
         {/* Top Row: Takes up 2 columns */}
         <div className="col-span-1 lg:col-span-2 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 shadow-sm font-sans w-full">
           {/* Widget Header */}
@@ -121,7 +121,7 @@ const SectionExecute = () => {
         </div>
 
         {/* Top Row: Takes up 1 column */}
-        <div className="col-span-1 bg-slate-100 p-4 rounded-xl mt-4 w-full">
+        <div className="col-span-1 bg-slate-100 p-4 rounded-xl w-full">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col w-full h-full min-h-94.5 font-sans">
             {/* Header Section */}
             <div className="flex items-start gap-4 mb-8">
@@ -157,7 +157,7 @@ const SectionExecute = () => {
         </div>
 
         {/* Bottom Row: Spans all 3 columns */}
-        <div className="col-span-1 bg-slate-100 p-4 rounded-xl mt-4 w-full">
+        <div className="col-span-1 bg-slate-100 p-4 rounded-xl w-full">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col w-full h-full font-sans">
             {/* Header Section */}
             <div className="flex items-start gap-4 mb-8">
@@ -200,7 +200,7 @@ const SectionExecute = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-2 bg-slate-100 p-4 rounded-xl mt-4 w-full">
+        <div className="col-span-1 lg:col-span-2 bg-slate-100 p-4 rounded-xl w-full">
           <div className="bg-slate-50 p-6 rounded-xl font-sans w-full h-full">
             {/* Header Section */}
             <div className="flex items-center gap-4 mb-7">
