@@ -79,9 +79,9 @@ const SectionConnect = () => {
                 title: "Weekly Reviews",
                 desc: "Reflect on your progress and refine your approach.",
               },
-            ].map((feature, i) => (
+            ].map((feature) => (
               <motion.div
-                key={i}
+                key={feature.title}
                 variants={itemVariants}
                 className="flex items-start gap-4"
               >
@@ -120,7 +120,7 @@ const SectionConnect = () => {
                 <div className="flex items-center gap-3">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
-                    className="bg-emerald-950 rounded md p-1 shadow-sm shrink-0"
+                    className="bg-emerald-950 rounded-md p-1 shadow-sm shrink-0"
                   >
                     <CheckSquare className="w-4 h-4 text-white" />
                   </motion.div>

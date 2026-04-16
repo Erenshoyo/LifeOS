@@ -100,18 +100,18 @@ const SectionLaunch = () => {
           className="mt-4 flex flex-col items-center gap-8"
         >
           <Link href="/dashboard" className="w-full md:w-auto">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button
+              asChild
+              size="lg"
+              className="w-full md:w-auto bg-white text-[#002D1C] hover:bg-emerald-50 text-base md:text-lg font-bold h-auto py-5 px-10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all border-none cursor-pointer"
             >
-              <Button
-                asChild
-                size="lg"
-                className="w-full md:w-auto bg-white text-[#002D1C] hover:bg-emerald-50 text-base md:text-lg font-bold h-auto py-5 px-10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all border-none cursor-pointer"
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>Launch Life OS Now</span>
-              </Button>
-            </motion.div>
+                Launch Life OS Now
+              </motion.button>
+            </Button>
           </Link>
 
           <p className="text-sm text-emerald-100/40 font-medium">

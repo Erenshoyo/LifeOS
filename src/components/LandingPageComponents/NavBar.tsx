@@ -16,7 +16,8 @@ export default function NavBar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    const opts = { passive: true };
+    window.addEventListener("scroll", handleScroll, opts);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -25,7 +26,7 @@ export default function NavBar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-4 inset-x-0 z-50 max-w-7xl mx-auto px-6 transition-all duration-300 ${
+      className={`fixed inset-x-0 z-50 max-w-7xl mx-auto px-6 transition-all duration-300 ${
         scrolled ? "top-2" : "top-4"
       }`}
     >

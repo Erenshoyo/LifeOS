@@ -255,10 +255,7 @@ const SectionExecute = () => {
 
                 {/* Active Progress Ring Circle */}
                 <motion.div
-                  initial={{ rotate: -90, pathLength: 0 }}
-                  whileInView={{ pathLength: 0.7 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 2, ease: "easeInOut" }}
+                  initial={{ rotate: -90 }}
                   className="absolute inset-0"
                 >
                   <svg className="w-full h-full" viewBox="0 0 100 100">
@@ -272,6 +269,7 @@ const SectionExecute = () => {
                       className="text-emerald-600"
                       initial={{ pathLength: 0 }}
                       whileInView={{ pathLength: 0.7 }}
+                      viewport={{ once: true }}
                       transition={{ duration: 2, ease: "easeInOut" }}
                     />
                   </svg>
