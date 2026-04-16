@@ -1,3 +1,5 @@
+"use client";
+
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
@@ -9,7 +11,7 @@ interface AntigravityProps {
   waveSpeed?: number;
   waveAmplitude?: number;
   particleSize?: number;
-  lerpSpeed?: number;
+  smoothSpeed?: number;
   color?: string;
   autoAnimate?: boolean;
   particleVariance?: number;
@@ -27,7 +29,7 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
   waveSpeed = 0.4,
   waveAmplitude = 1,
   particleSize = 2,
-  lerpSpeed = 0.1,
+  smoothSpeed = 0.1,
   color = '#FF9FFC',
   autoAnimate = false,
   particleVariance = 1,
@@ -145,9 +147,9 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
         targetPos.z = mz * depthFactor + Math.sin(t) * (1 * waveAmplitude * depthFactor);
       }
 
-      particle.cx += (targetPos.x - particle.cx) * lerpSpeed;
-      particle.cy += (targetPos.y - particle.cy) * lerpSpeed;
-      particle.cz += (targetPos.z - particle.cz) * lerpSpeed;
+      particle.cx += (targetPos.x - particle.cx) * smoothSpeed;
+      particle.cy += (targetPos.y - particle.cy) * smoothSpeed;
+      particle.cz += (targetPos.z - particle.cz) * smoothSpeed;
 
       dummy.position.set(particle.cx, particle.cy, particle.cz);
 

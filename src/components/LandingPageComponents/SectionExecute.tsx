@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Check,
   Circle,
@@ -7,8 +9,31 @@ import {
   Timer,
 } from "lucide-react";
 import React from "react";
+import { motion, Variants } from "framer-motion";
 
 const SectionExecute = () => {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    },
+  };
+
   const tasks = [
     {
       id: 1,
@@ -32,15 +57,23 @@ const SectionExecute = () => {
       badgeStyles: "bg-amber-50 border-amber-200 text-amber-800",
     },
   ];
+
   const heatmapData = [
     [1, 1, 1, 0, 1, 1, 1],
     [1, 1, 1, 1, 0, 1, 1],
     [1, 1, 1, 1, 1, 1, 0],
   ];
+
   return (
-    <div className="bg-white mt-30 pb-30">
+    <div className="bg-white mt-30 pb-30 overflow-hidden">
       {/* headings */}
-      <div className="flex flex-col justify-center items-center gap-5 p-30">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col justify-center items-center gap-5 p-30"
+      >
         <h3 className="text-emerald-900 uppercase font-bold text-xs tracking-[0.25em]">
           Complete productivity suite
         </h3>
@@ -48,11 +81,18 @@ const SectionExecute = () => {
           Everything you need. Nothing you don&apos;t.
         </h1>
         <p className="text-slate-800">Built for focus, designed for clarity.</p>
-      </div>
+      </motion.div>
+
       {/* Grid layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 max-w-7xl mx-auto gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 max-w-7xl mx-auto gap-4 px-4 sm:px-6 lg:px-8">
         {/* Top Row: Takes up 2 columns */}
-        <div className="col-span-1 lg:col-span-2 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 shadow-sm font-sans w-full">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="col-span-1 lg:col-span-2 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 shadow-sm font-sans w-full"
+        >
           {/* Widget Header */}
           <div className="flex items-start gap-4 mb-8">
             <div className="bg-emerald-950 p-3 rounded-xl shrink-0 shadow-sm border border-emerald-900">
@@ -70,11 +110,19 @@ const SectionExecute = () => {
           </div>
 
           {/* Task List */}
-          <div className="w-full bg-slate-200/70 rounded-xl p-4 md:p-6 flex flex-col gap-3">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="w-full bg-slate-200/70 rounded-xl p-4 md:p-6 flex flex-col gap-3"
+          >
             {tasks.map((task) => (
-              <div
+              <motion.div
                 key={task.id}
-                className={`px-5 py-3.5 flex justify-between items-center bg-white rounded-xl shadow-sm border transition-all ${
+                variants={itemVariants}
+                whileHover={{ scale: 1.01, x: 5 }}
+                className={`px-5 py-3.5 flex justify-between items-center bg-white rounded-xl shadow-sm border transition-shadow ${
                   task.isCompleted
                     ? "border-transparent opacity-75"
                     : "border-slate-100 hover:shadow-md"
@@ -115,13 +163,19 @@ const SectionExecute = () => {
                     {task.priority}
                   </span>
                 )}
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Top Row: Takes up 1 column */}
-        <div className="col-span-1 bg-slate-100 p-4 rounded-xl w-full">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="col-span-1 bg-slate-100 p-4 rounded-xl w-full"
+        >
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col w-full h-full min-h-94.5 font-sans">
             {/* Header Section */}
             <div className="flex items-start gap-4 mb-8">
@@ -143,9 +197,19 @@ const SectionExecute = () => {
               {heatmapData.map((row, rowIndex) => (
                 <div key={rowIndex} className="flex gap-1.5 w-full">
                   {row.map((isActive, colIndex) => (
-                    <div
+                    <motion.div
                       key={colIndex}
-                      className={`h-8 flex-1 rounded transition-colors duration-200 hover:opacity-80 ${
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        delay: (rowIndex * 7 + colIndex) * 0.03,
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 10,
+                      }}
+                      whileHover={{ scale: 1.2, zIndex: 10 }}
+                      className={`h-8 flex-1 rounded cursor-pointer transition-colors duration-200 ${
                         isActive ? "bg-emerald-950" : "bg-slate-200"
                       }`}
                     />
@@ -154,10 +218,16 @@ const SectionExecute = () => {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Bottom Row: Spans all 3 columns */}
-        <div className="col-span-1 bg-slate-100 p-4 rounded-xl w-full">
+        {/* Bottom Row: Focus Mode */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="col-span-1 bg-slate-100 p-4 rounded-xl w-full"
+        >
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col w-full h-full font-sans">
             {/* Header Section */}
             <div className="flex items-start gap-4 mb-8">
@@ -183,30 +253,61 @@ const SectionExecute = () => {
                   strokeWidth={1.5}
                 />
 
-                {/* Active Progress Ring Circle (Optional visual enhancement) */}
-                <Circle
-                  className="w-full h-full text-emerald-600 absolute inset-0 -rotate-90"
-                  strokeWidth={2.5}
-                  strokeDasharray="400"
-                  strokeDashoffset="120"
-                  strokeLinecap="round"
-                />
+                {/* Active Progress Ring Circle */}
+                <motion.div
+                  initial={{ rotate: -90, pathLength: 0 }}
+                  whileInView={{ pathLength: 0.7 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
+                  className="absolute inset-0"
+                >
+                  <svg className="w-full h-full" viewBox="0 0 100 100">
+                    <motion.circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="transparent"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      className="text-emerald-600"
+                      initial={{ pathLength: 0 }}
+                      whileInView={{ pathLength: 0.7 }}
+                      transition={{ duration: 2, ease: "easeInOut" }}
+                    />
+                  </svg>
+                </motion.div>
 
                 {/* Timer Text */}
-                <span className="text-4xl font-bold text-slate-900 tracking-tight">
+                <motion.span
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-4xl font-bold text-slate-900 tracking-tight"
+                >
                   25:00
-                </span>
+                </motion.span>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-span-1 lg:col-span-2 bg-slate-100 p-4 rounded-xl w-full">
+        </motion.div>
+
+        {/* Bottom Row: Brain Dump (Takes up 2 columns) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="col-span-1 lg:col-span-2 bg-slate-100 p-4 rounded-xl w-full"
+        >
           <div className="bg-slate-50 p-6 rounded-xl font-sans w-full h-full">
             {/* Header Section */}
             <div className="flex items-center gap-4 mb-7">
-              <div className="bg-emerald-950 p-3 rounded-full shrink-0 shadow-sm">
+              <motion.div
+                whileHover={{ rotate: 180 }}
+                transition={{ duration: 0.6 }}
+                className="bg-emerald-950 p-3 rounded-full shrink-0 shadow-sm"
+              >
                 <CircleCheck className="w-5 h-5 text-white" />
-              </div>
+              </motion.div>
               <div>
                 <h1 className="font-bold text-lg text-slate-900">
                   The Brain Dump
@@ -221,24 +322,42 @@ const SectionExecute = () => {
             {/* Interactive/Processing Area */}
             <div className="w-full bg-slate-200 rounded-lg px-6 py-5 flex flex-col gap-4">
               {/* Step 1: Raw Input / Thought */}
-              <div className="px-5 py-4 bg-white/60 rounded-xl border border-slate-300 border-dashed">
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8 }}
+                className="px-5 py-4 bg-white/60 rounded-xl border border-slate-300 border-dashed"
+              >
                 <p className="text-slate-700 italic text-sm">
                   &quot;Remember to email Sarah about the design mockups by
                   Friday&quot;
                 </p>
-              </div>
+              </motion.div>
 
               {/* Step 2: Processing Indicator */}
-              <div className="flex items-center gap-2 px-2 text-sm text-slate-500 font-medium">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.2 }}
+                className="flex items-center gap-2 px-2 text-sm text-slate-500 font-medium"
+              >
                 <Check
                   className="w-4 h-4 text-emerald-600 opacity-70 animate-pulse"
                   strokeWidth={3}
                 />
                 <span className="animate-pulse">Converting to task...</span>
-              </div>
+              </motion.div>
 
               {/* Step 3: Converted Task */}
-              <div className="px-6 py-4 flex justify-between items-center bg-white rounded-xl shadow-sm border border-emerald-100 transition-all hover:shadow-md">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.8, type: "spring" }}
+                className="px-6 py-4 flex justify-between items-center bg-white rounded-xl shadow-sm border border-emerald-100 transition-all hover:shadow-md"
+              >
                 <div className="flex items-start gap-3">
                   <div className="mt-0.5 cursor-pointer text-slate-400 hover:text-emerald-700 transition-colors">
                     <Square className="w-5 h-5" />
@@ -257,13 +376,15 @@ const SectionExecute = () => {
                 <p className="font-bold px-2.5 py-1.5 bg-green-50 border border-emerald-200 rounded-lg text-xs text-emerald-800">
                   High
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
 };
 
 export default SectionExecute;
+
+
