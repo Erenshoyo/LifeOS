@@ -16,8 +16,8 @@ import {
   Share2,
   MoreVertical,
 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { Skeleton } from "boneyard-js/react";
+import { useState } from "react";
+
 
 const timelineEvents = [
   {
@@ -70,15 +70,20 @@ const timelineEvents = [
 
 export default function TimelinePage() {
   const [view, setView] = useState("Daily");
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
+
+  const getFilteredEvents = (currentView: string) => {
+    if (currentView === "Daily") return timelineEvents;
+    if (currentView === "Weekly")
+      // Group by day — for now show only the most recent event per type as a summary
+      return timelineEvents.filter((_, i) => i % 2 === 0);
+    // Monthly: show one summary entry per event type
+    return timelineEvents.filter((e) => e.type !== "inspiration");
+  };
+
+  const visibleEvents = getFilteredEvents(view);
 
   return (
     <AppLayout title="Timeline" subtitle="YOUR JOURNEY TODAY">
-      <Skeleton name="timeline" loading={isLoading}>
         <div className="flex flex-col lg:grid lg:grid-cols-[1.5fr_1fr] gap-12 pb-12 font-inter mt-6">
         
         {/* Left Column: Timeline Chronicle */}
@@ -113,7 +118,7 @@ export default function TimelinePage() {
             <div className="absolute left-[7px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-transparent via-zinc-200 to-transparent" />
 
             <div className="flex flex-col gap-12">
-              {timelineEvents.map((event, idx) => (
+              {visibleEvents.map((event, idx) => (
                 <div key={idx} className="relative flex gap-10 items-start group">
                   {/* Timeline Node */}
                   <div className="mt-2 w-4 h-4 rounded-full bg-white border-2 border-zinc-200 relative z-10 transition-colors group-hover:border-zinc-800">
@@ -162,7 +167,10 @@ export default function TimelinePage() {
                                    <span>{event.status}</span>
                                 </div>
                                 <div className="h-2 w-full bg-zinc-100 rounded-full overflow-hidden">
-                                    <div className="h-full bg-zinc-800 w-full" />
+                                    <div
+                                      className="h-full bg-zinc-800 rounded-full"
+                                      style={{ width: `${Math.max(0, Math.min(100, event.progress ?? 0))}%` }}
+                                    />
                                 </div>
                             </div>
                         )}
@@ -280,7 +288,6 @@ export default function TimelinePage() {
         </div>
 
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }

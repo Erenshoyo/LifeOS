@@ -15,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Skeleton } from "boneyard-js/react";
+
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
 type TimePeriod = "daily" | "weekly" | "monthly";
@@ -66,11 +66,6 @@ export default function FocusModePage() {
     setTimeLeft(1500);
   };
 
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
 
   const [timePeriod, setTimePeriod] = useState<TimePeriod>("daily");
 
@@ -115,7 +110,6 @@ export default function FocusModePage() {
 
   return (
     <AppLayout title="Focus Mode" subtitle="DEEP WORK SESSION">
-      <Skeleton name="focus-mode" loading={isLoading}>
         <div className="flex flex-col lg:grid lg:grid-cols-[1.5fr_1fr] gap-12 font-inter mt-6">
           {/* Main Focus Area (Left) */}
           <div className="flex flex-col gap-12">
@@ -486,7 +480,6 @@ export default function FocusModePage() {
             </button>
           </div>
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }

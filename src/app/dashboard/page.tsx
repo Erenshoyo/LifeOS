@@ -11,20 +11,37 @@ import {
   CloudLightning,
 } from "lucide-react";
 
-import { useState, useEffect } from "react";
-import { Skeleton } from "boneyard-js/react";
-import "@/bones/registry";
+import { useState, useCallback } from "react";
+
 
 export default function Dashboard() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
+  const [journalEntry, setJournalEntry] = useState("");
+
+  const getTodayStrings = () => {
+    const now = new Date();
+    const title = now.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    const subtitle = now
+      .toLocaleDateString("en-US", { weekday: "long" })
+      .toUpperCase();
+    return { title, subtitle };
+  };
+
+  const { title: todayTitle, subtitle: todaySubtitle } = getTodayStrings();
+
+  const saveEntry = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      // TODO: wire to real persistence layer
+    },
+    []
+  );
 
   return (
-    <AppLayout subtitle="THURSDAY" title="April 9, 2026">
-      <Skeleton name="dashboard" loading={isLoading}>
+    <AppLayout subtitle={todaySubtitle} title={todayTitle}>
         <div className="flex flex-col gap-8 pb-12 font-inter mt-4">
         {/* KPI Cards Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -208,8 +225,12 @@ export default function Dashboard() {
             </h2>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-[0px_12px_32px_rgba(25,28,29,0.04)] border border-zinc-100 flex flex-col p-8 gap-6 group hover:shadow-[0px_12px_32px_rgba(25,28,29,0.08)] transition-all">
+          <form onSubmit={saveEntry} className="bg-white rounded-2xl shadow-[0px_12px_32px_rgba(25,28,29,0.04)] border border-zinc-100 flex flex-col p-8 gap-6 group hover:shadow-[0px_12px_32px_rgba(25,28,29,0.08)] transition-all">
+            <label htmlFor="dashboard-journal" className="sr-only">Journal entry</label>
             <textarea 
+              id="dashboard-journal"
+              value={journalEntry}
+              onChange={(e) => setJournalEntry(e.target.value)}
               className="w-full text-zinc-700 font-medium bg-transparent resize-none outline-none focus:ring-0 placeholder:text-zinc-400 placeholder:font-normal leading-relaxed"
               placeholder="How are you feeling today? What's on your mind?"
               rows={2}
@@ -219,11 +240,17 @@ export default function Dashboard() {
               <span className="text-xs text-zinc-500 font-medium">
                 Last entry: 1 day ago
               </span>
-              <button className="bg-gradient-to-br from-[#002d1c] to-[#00452e] text-white px-6 py-2.5 rounded-xl text-sm font-semibold shadow-[0px_4px_12px_rgba(0,45,28,0.2)] hover:shadow-[0px_6px_16px_rgba(0,45,28,0.3)] hover:-translate-y-0.5 active:translate-y-0 transition-all">
+              <button
+                type="submit"
+                disabled={!journalEntry.trim()}
+                aria-disabled={!journalEntry.trim()}
+                title={journalEntry.trim() ? undefined : "Write something first"}
+                className="bg-gradient-to-br from-[#002d1c] to-[#00452e] text-white px-6 py-2.5 rounded-xl text-sm font-semibold shadow-[0px_4px_12px_rgba(0,45,28,0.2)] hover:shadow-[0px_6px_16px_rgba(0,45,28,0.3)] hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[0px_4px_12px_rgba(0,45,28,0.2)]"
+              >
                 Save Entry
               </button>
             </div>
-          </div>
+          </form>
         </div>
 
         {/* Sync Status Footer */}
@@ -238,7 +265,6 @@ export default function Dashboard() {
           </div>
         </div>
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }
