@@ -6,6 +6,7 @@ import Image from "next/image";
 import Antigravity from "../Antigravity";
 import dashboardHeroImage from "../../../public/assets/Design Life OS Productivity App.webp";
 import { motion, Variants } from "framer-motion";
+import Link from "next/link";
 
 export default function Hero() {
   const containerVariants: Variants = {
@@ -100,9 +101,11 @@ export default function Hero() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center gap-4 mt-4 pointer-events-auto"
           >
-            <Button className="bg-[#002D1C] hover:bg-[#004d30] px-8 py-6 text-base font-bold transition-colors">
-              Start your free system
-            </Button>
+            <Link href="/dashboard">
+              <Button className="bg-[#002D1C] hover:bg-[#004d30] px-8 py-6 text-base font-bold transition-colors">
+                Start your free system
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               className="group flex items-center gap-2 font-semibold bg-white/80 backdrop-blur-sm shadow-sm"

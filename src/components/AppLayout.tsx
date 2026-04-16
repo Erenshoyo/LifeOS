@@ -21,7 +21,7 @@ export function AppLayout({
 
       {/* The Main Content Area (Offset by 64 space units to account for the fixed sidebar) */}
       <main className="flex-1 ml-64 p-8">
-        <div className="max-w-5xl mx-auto">
+        <div>
           {/* Header */}
           <header className="mb-8">
             <p className="text-sm font-medium text-zinc-500 mb-1">{subtitle}</p>
