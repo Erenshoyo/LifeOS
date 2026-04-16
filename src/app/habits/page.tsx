@@ -37,20 +37,11 @@ const chartData = [
   { day: "Sun", count: 4 },
 ];
 
-import { useState, useEffect } from "react";
-import { Skeleton } from "boneyard-js/react";
-import "@/bones/registry";
+
 
 export default function HabitsPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <AppLayout title="Habits" subtitle="BUILD LASTING CONSISTENCY">
-      <Skeleton name="habits" loading={isLoading}>
         <div className="flex flex-col gap-8 pb-12 font-inter mt-4">
         
         {/* Habit KPI Row */}
@@ -363,7 +354,6 @@ export default function HabitsPage() {
         </div>
 
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }

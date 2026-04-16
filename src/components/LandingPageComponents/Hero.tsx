@@ -101,11 +101,9 @@ export default function Hero() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center gap-4 mt-4 pointer-events-auto"
           >
-            <Link href="/dashboard">
-              <Button className="bg-[#002D1C] hover:bg-[#004d30] px-8 py-6 text-base font-bold transition-colors">
-                Start your free system
-              </Button>
-            </Link>
+            <Button asChild className="bg-[#002D1C] hover:bg-[#004d30] px-8 py-6 text-base font-bold transition-colors">
+              <Link href="/dashboard">Start your free system</Link>
+            </Button>
             <Button
               variant="ghost"
               className="group flex items-center gap-2 font-semibold bg-white/80 backdrop-blur-sm shadow-sm"

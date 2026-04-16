@@ -19,37 +19,30 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-import { useState, useEffect } from "react";
-import { Skeleton } from "boneyard-js/react";
-import "@/bones/registry";
+
 
 export default function JournalPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <AppLayout title="Journal" subtitle="REFLECT AND CAPTURE">
-      <Skeleton name="journal" loading={isLoading}>
         <div className="flex flex-col gap-8 pb-12 font-inter mt-4">
         {/* New Entry Editor Card */}
         <div className="bg-white rounded-2xl shadow-[0px_12px_32px_rgba(25,28,29,0.04)] border border-zinc-100 p-6 flex flex-col gap-6 group hover:shadow-[0px_12px_48px_rgba(25,28,29,0.06)] transition-all">
+          <label htmlFor="journal-entry" className="sr-only">Journal entry</label>
           <textarea
+            id="journal-entry"
             className="w-full text-zinc-700 font-medium bg-transparent resize-none outline-none focus:ring-0 placeholder:text-zinc-400 placeholder:font-normal leading-relaxed text-base min-h-[120px]"
             placeholder="Write your thoughts... Use **markdown** for formatting"
           />
 
           <div className="flex items-center justify-between pt-5 border-t border-zinc-50">
             <div className="flex items-center gap-2">
-              <button className="p-2.5 rounded-xl hover:bg-zinc-50 text-zinc-400 hover:text-zinc-600 transition-all">
+              <button aria-label="Insert image" className="p-2.5 rounded-xl hover:bg-zinc-50 text-zinc-400 hover:text-zinc-600 transition-all">
                 <ImageIcon className="w-5 h-5" />
               </button>
-              <button className="p-2.5 rounded-xl hover:bg-zinc-50 text-zinc-400 hover:text-zinc-600 transition-all">
+              <button aria-label="Start recording" className="p-2.5 rounded-xl hover:bg-zinc-50 text-zinc-400 hover:text-zinc-600 transition-all">
                 <Mic className="w-5 h-5" />
               </button>
-              <button className="p-2.5 rounded-xl hover:bg-zinc-50 text-zinc-400 hover:text-zinc-600 transition-all">
+              <button aria-label="Add link" className="p-2.5 rounded-xl hover:bg-zinc-50 text-zinc-400 hover:text-zinc-600 transition-all">
                 <LinkIcon className="w-5 h-5" />
               </button>
             </div>
@@ -193,12 +186,11 @@ export default function JournalPage() {
 
         {/* Action Button Floater (Secondary New Entry Access) */}
         <div className="fixed bottom-8 right-8">
-          <button className="w-14 h-14 rounded-full bg-gradient-to-br from-[#002d1c] to-[#00452e] text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform group">
+          <button aria-label="New journal entry" className="w-14 h-14 rounded-full bg-gradient-to-br from-[#002d1c] to-[#00452e] text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform group">
             <Plus className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
           </button>
         </div>
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }

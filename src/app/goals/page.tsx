@@ -13,6 +13,7 @@ import Link from "next/link";
 
 const goalsData = [
   {
+    id: "goal-1",
     title: "Launch new marketing campaign",
     progress: 65,
     deadline: "May 15, 2026",
@@ -21,6 +22,7 @@ const goalsData = [
     status: "active",
   },
   {
+    id: "goal-2",
     title: "Complete financial planning",
     progress: 40,
     deadline: "Apr 30, 2026",
@@ -29,6 +31,7 @@ const goalsData = [
     status: "active",
   },
   {
+    id: "goal-3",
     title: "Ship product v2.0",
     progress: 78,
     deadline: "Jun 1, 2026",
@@ -37,6 +40,7 @@ const goalsData = [
     status: "active",
   },
   {
+    id: "goal-4",
     title: "Learn Spanish basics",
     progress: 25,
     deadline: "Dec 31, 2026",
@@ -46,20 +50,11 @@ const goalsData = [
   },
 ];
 
-import { useState, useEffect } from "react";
-import { Skeleton } from "boneyard-js/react";
-import "@/bones/registry";
+
 
 export default function GoalsPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <AppLayout title="Goals" subtitle="TRACK YOUR LONG-TERM OBJECTIVES">
-      <Skeleton name="goals" loading={isLoading}>
         <div className="flex flex-col gap-8 pb-12 font-inter mt-4">
         
         {/* Header Action Row */}
@@ -76,9 +71,9 @@ export default function GoalsPage() {
 
         {/* Goals Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {goalsData.map((goal, index) => (
+          {goalsData.map((goal) => (
             <div 
-              key={index} 
+              key={goal.id} 
               className="bg-white rounded-2xl shadow-[0px_1px_3px_rgba(0,0,0,0.05)] border border-zinc-100 p-6 flex flex-col gap-5 transition-all hover:shadow-[0px_12px_32px_rgba(0,0,0,0.04)] hover:-translate-y-1 group cursor-pointer"
             >
               {/* Card Header */}
@@ -143,7 +138,6 @@ export default function GoalsPage() {
         </div>
 
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }

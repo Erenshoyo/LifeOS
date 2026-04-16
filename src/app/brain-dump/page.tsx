@@ -11,7 +11,7 @@ import {
   Inbox,
   CheckCircle2,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const initialPending = [
   { id: 1, text: "Need to organize my notes better", time: "4/7/2026, 3:00:00 PM" },
@@ -24,27 +24,36 @@ const initialProcessed = [
   { id: 5, text: "Book recommendations from John", time: "4/6/2026, 7:00:00 PM" },
 ];
 
-import { Skeleton } from "boneyard-js/react";
+
 
 export default function BrainDumpPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   const [input, setInput] = useState("");
+  const [toProcessList, setToProcessList] = useState(initialPending);
+  const [processedList] = useState(initialProcessed);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const addItem = () => {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+    setToProcessList((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        text: trimmed,
+        time: new Date().toLocaleString(),
+      },
+    ]);
+    setInput("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      // Logic would go here to add item
-      setInput("");
+      e.preventDefault();
+      addItem();
     }
   };
 
   return (
     <AppLayout title="Brain Dump" subtitle="CLEAR YOUR MIND">
-      <Skeleton name="brain-dump" loading={isLoading}>
         <div className="flex flex-col gap-10 pb-12 font-inter mt-6">
         
         {/* Quick Capture Card */}
@@ -60,7 +69,11 @@ export default function BrainDumpPage() {
                 className="w-full h-12 bg-white border border-zinc-200 rounded-xl px-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a5f49]/20 focus:border-[#1a5f49] transition-all"
               />
             </div>
-            <button className="bg-[#1a5f49] hover:bg-[#154a39] text-white h-12 px-6 rounded-xl text-sm font-bold shadow-[0px_4px_12px_rgba(26,95,73,0.1)] transition-all flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={addItem}
+              className="bg-[#1a5f49] hover:bg-[#154a39] text-white h-12 px-6 rounded-xl text-sm font-bold shadow-[0px_4px_12px_rgba(26,95,73,0.1)] transition-all flex items-center gap-2 shrink-0"
+            >
               <Plus className="w-5 h-5" />
               Add
             </button>
@@ -77,7 +90,7 @@ export default function BrainDumpPage() {
                 <Inbox className="w-5 h-5 text-zinc-400" />
                 <h3 className="text-lg font-bold font-manrope text-zinc-800">To Process</h3>
                 <span className="bg-zinc-100 text-zinc-500 text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tight">
-                  {initialPending.length}
+                  {toProcessList.length}
                 </span>
               </div>
               <button className="text-xs font-bold text-zinc-400 hover:text-zinc-600 uppercase tracking-widest transition-colors">
@@ -86,7 +99,7 @@ export default function BrainDumpPage() {
             </div>
 
             <div className="flex flex-col gap-3">
-              {initialPending.map((item) => (
+              {toProcessList.map((item) => (
                 <div 
                   key={item.id} 
                   className="bg-white rounded-2xl p-5 shadow-[0px_1px_2px_rgba(0,0,0,0.04)] border border-zinc-100 flex items-start justify-between group hover:shadow-[0px_8px_24px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all"
@@ -122,12 +135,12 @@ export default function BrainDumpPage() {
               <CheckCheck className="w-5 h-5 text-zinc-400" />
               <h3 className="text-lg font-bold font-manrope text-zinc-800">Processed</h3>
               <span className="bg-zinc-100 text-zinc-400 text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tight">
-                {initialProcessed.length}
+                {processedList.length}
               </span>
             </div>
 
             <div className="flex flex-col gap-3">
-              {initialProcessed.map((item) => (
+              {processedList.map((item) => (
                 <div 
                   key={item.id} 
                   className="bg-white/60 backdrop-blur-[2px] rounded-2xl p-5 border border-zinc-100 flex items-start justify-between group opacity-70 hover:opacity-100 transition-all"
@@ -154,7 +167,6 @@ export default function BrainDumpPage() {
         </div>
 
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }

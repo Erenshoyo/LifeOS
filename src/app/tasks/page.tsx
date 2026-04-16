@@ -14,22 +14,12 @@ import {
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
-import Link from "next/link";
 
-import { useState, useEffect } from "react";
-import { Skeleton } from "boneyard-js/react";
-import "@/bones/registry";
+
 
 export default function TasksPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <AppLayout title="Tasks" subtitle="MANAGE YOUR FOCUS">
-      <Skeleton name="tasks" loading={isLoading}>
         <div className="flex flex-col gap-8 pb-12 font-inter mt-4">
         {/* Hero & Pending Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -95,9 +85,13 @@ export default function TasksPage() {
                 CRITICAL
               </div>
             </div>
-            <Link href="#" className="text-xs font-bold text-zinc-400 hover:text-zinc-600 transition-colors uppercase tracking-wider">
+            <button
+              type="button"
+              aria-label="View all tasks"
+              className="text-xs font-bold text-zinc-400 hover:text-zinc-600 transition-colors uppercase tracking-wider"
+            >
               View All
-            </Link>
+            </button>
           </div>
 
           <div className="bg-white rounded-2xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)] border border-zinc-100 divide-y divide-zinc-50 overflow-hidden">
@@ -211,7 +205,6 @@ export default function TasksPage() {
           </div>
         </div>
         </div>
-      </Skeleton>
     </AppLayout>
   );
 }
