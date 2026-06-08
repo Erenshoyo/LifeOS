@@ -1,6 +1,5 @@
 "use client";
 
-import { Moon } from "lucide-react";
 import lifeOSLogo from "../../../public/assets/Gemini_Generated_Image_cs798gcs798gcs79-removebg-preview-removebg-preview.png";
 import Image from "next/image";
 import { motion } from "framer-motion";
