@@ -1,77 +1,91 @@
 "use client";
 
 import { AppLayout } from "@/components/AppLayout";
-import {
-  Clock,
-  Circle,
-  CheckCircle2,
-  Calendar,
-  Zap,
-  Shield,
-  User,
-  MoreHorizontal,
-  CloudLightning,
-  AlertCircle,
-  CheckCircle,
-} from "lucide-react";
+import { CloudLightning } from "lucide-react";
+import { useState } from "react";
+import { CurrentFocusCard } from "./components/CurrentFocusCard";
+import { PendingTasksCard } from "./components/PendingTasksCard";
+import { TaskListItem, Task } from "./components/TaskListItem";
+import { TaskCategoryCard } from "./components/TaskCategoryCard";
 
+const INITIAL_TASKS: Task[] = [
+  {
+    id: "task-1",
+    title: "Draft Q3 Financial Roadmap",
+    description: "High-level strategic planning for upcoming investments",
+    time: "10:30 AM",
+    isHighlighted: true,
+    isCompleted: false,
+  },
+  {
+    id: "task-2",
+    title: "Team Feedback Synthesis",
+    description: "Categorize survey results into actionable items",
+    time: "01:00 PM",
+    isHighlighted: true,
+    isCompleted: false,
+  },
+  {
+    id: "task-3",
+    title: "Monthly Maintenance Schedule",
+    description: "Review and update automated system scripts",
+    time: "04:30 PM",
+    isHighlighted: false,
+    isCompleted: false,
+  },
+];
 
+const INITIAL_CATEGORIES = [
+  {
+    category: "Personal Growth",
+    icon: "user" as const,
+    variant: "zinc" as const,
+    items: [
+      "Complete 'Mindful Leadership' Module 3",
+      "Review annual reading list targets",
+    ],
+  },
+  {
+    category: "Infrastructure",
+    icon: "shield" as const,
+    variant: "emerald" as const,
+    items: [
+      "Archive old project folders from NAS",
+      "Update workspace security protocols",
+    ],
+  },
+];
 
 export default function TasksPage() {
+  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
+
+  const handleToggleTask = (id: string) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+      )
+    );
+  };
+
+  const pendingCount = tasks.filter((t) => !t.isCompleted).length;
+
   return (
     <AppLayout title="Tasks" subtitle="MANAGE YOUR FOCUS">
-        <div className="flex flex-col gap-8 pb-12 font-inter mt-4">
+      <div className="flex flex-col gap-8 pb-12 font-inter mt-4">
         {/* Hero & Pending Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Current Focus Hero Card (Span 2) */}
-          <div className="lg:col-span-2 relative overflow-hidden rounded-2xl p-8 shadow-[0px_12px_48px_rgba(0,45,28,0.15)] bg-gradient-to-br from-[#002d1c] to-[#00452e] text-white flex items-center justify-between group">
-            {/* Background Decorative Element */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none group-hover:bg-white/10 transition-all duration-700" />
-            
-            <div className="relative z-10 flex flex-col gap-2 max-w-[70%]">
-              <div className="flex items-center gap-2 opacity-70">
-                <Zap className="w-3.5 h-3.5 fill-darkseagreen text-darkseagreen" />
-                <span className="text-[10px] tracking-[1.8px] font-bold uppercase">
-                  CURRENT FOCUS
-                </span>
-              </div>
-              <h2 className="text-[28px] md:text-[32px] font-extrabold font-manrope leading-tight mt-1">
-                Quarterly Productivity Review
-              </h2>
-              <p className="text-honeydew/80 text-sm md:text-base leading-relaxed mt-1">
-                Focus on high-leverage activities and clear the backlog before Friday.
-              </p>
-            </div>
+          <CurrentFocusCard
+            title="Quarterly Productivity Review"
+            description="Focus on high-leverage activities and clear the backlog before Friday."
+            progress={82}
+            goalLabel="Weekly Goal"
+          />
 
-            <div className="relative z-10 flex flex-col items-end gap-1 text-right min-w-[100px]">
-              <div className="text-[42px] md:text-[48px] font-extrabold leading-none tracking-tighter">
-                82%
-              </div>
-              <div className="text-[10px] md:text-xs font-medium uppercase tracking-wider opacity-70">
-                Weekly Goal
-              </div>
-            </div>
-          </div>
-
-          {/* Pending Tasks KPI Card */}
-          <div className="bg-white rounded-2xl p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.04)] border border-zinc-100 flex flex-col justify-between transition-all hover:shadow-[0px_12px_48px_rgba(25,28,29,0.08)]">
-            <div className="flex items-start justify-between">
-              <div className="p-3 rounded-xl bg-cyan-50 text-cyan-600">
-                <Calendar className="w-6 h-6" />
-              </div>
-              <div className="bg-cyan-50 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
-                Priority
-              </div>
-            </div>
-            <div className="flex flex-col gap-1 mt-6">
-              <div className="text-[36px] font-extrabold text-zinc-900 leading-none">
-                3
-              </div>
-              <div className="text-sm font-medium text-zinc-500">
-                Pending Tasks Today
-              </div>
-            </div>
-          </div>
+          <PendingTasksCard
+            count={pendingCount}
+            label="Pending Tasks Today"
+            badgeText="Priority"
+          />
         </div>
 
         {/* Today's Focus List */}
@@ -88,57 +102,20 @@ export default function TasksPage() {
             <button
               type="button"
               aria-label="View all tasks"
-              className="text-xs font-bold text-zinc-400 hover:text-zinc-600 transition-colors uppercase tracking-wider"
+              className="text-xs font-bold text-zinc-400 hover:text-zinc-600 transition-colors uppercase tracking-wider focus:outline-hidden"
             >
               View All
             </button>
           </div>
 
           <div className="bg-white rounded-2xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)] border border-zinc-100 divide-y divide-zinc-50 overflow-hidden">
-            {/* Task 1 */}
-            <div className="flex items-center justify-between p-6 hover:bg-zinc-50/50 transition-colors group cursor-pointer">
-              <div className="flex items-center gap-6">
-                <div className="w-6 h-6 rounded-full border-2 border-zinc-300 group-hover:border-zinc-400 transition-colors" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-base font-semibold text-zinc-900">Draft Q3 Financial Roadmap</span>
-                  <span className="text-[12px] text-zinc-500 font-medium">High-level strategic planning for upcoming investments</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">
-                <Clock className="w-3.5 h-3.5" />
-                10:30 AM
-              </div>
-            </div>
-
-            {/* Task 2 */}
-            <div className="flex items-center justify-between p-6 hover:bg-zinc-50/50 transition-colors group cursor-pointer">
-              <div className="flex items-center gap-6">
-                <div className="w-6 h-6 rounded-full border-2 border-zinc-300 group-hover:border-zinc-400 transition-colors" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-base font-semibold text-zinc-900">Team Feedback Synthesis</span>
-                  <span className="text-[12px] text-zinc-500 font-medium">Categorize survey results into actionable items</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">
-                <Clock className="w-3.5 h-3.5" />
-                01:00 PM
-              </div>
-            </div>
-
-            {/* Task 3 */}
-            <div className="flex items-center justify-between p-6 hover:bg-zinc-50/50 transition-colors group cursor-pointer">
-              <div className="flex items-center gap-6">
-                <div className="w-6 h-6 rounded-full border-2 border-zinc-300 group-hover:border-zinc-400 transition-colors" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-base font-semibold text-zinc-900">Monthly Maintenance Schedule</span>
-                  <span className="text-[12px] text-zinc-500 font-medium">Review and update automated system scripts</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 text-zinc-500 text-[11px] font-bold">
-                <Clock className="w-3.5 h-3.5" />
-                04:30 PM
-              </div>
-            </div>
+            {tasks.map((task) => (
+              <TaskListItem
+                key={task.id}
+                task={task}
+                onToggle={handleToggleTask}
+              />
+            ))}
           </div>
         </div>
 
@@ -147,43 +124,17 @@ export default function TasksPage() {
           <h3 className="text-xl font-extrabold font-manrope text-zinc-800 tracking-tight">
             Upcoming & Secondary
           </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Personal Growth Card */}
-            <div className="bg-zinc-100/50 p-8 rounded-2xl border-l-[4px] border-zinc-400 border border-zinc-100 flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-[1.2px] text-zinc-500">Personal Growth</span>
-                <User className="w-4 h-4 text-zinc-400" />
-              </div>
-              <div className="flex flex-col gap-3 mt-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 shrink-0" />
-                  <span className="text-sm font-medium text-zinc-700">Complete &apos;Mindful Leadership&apos; Module 3</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 shrink-0" />
-                  <span className="text-sm font-medium text-zinc-700">Review annual reading list targets</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Infrastructure Card */}
-            <div className="bg-zinc-100/50 p-8 rounded-2xl border-l-[4px] border-emerald-400 border border-zinc-100 flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-[1.2px] text-zinc-500">Infrastructure</span>
-                <Shield className="w-4 h-4 text-zinc-400" />
-              </div>
-              <div className="flex flex-col gap-3 mt-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                  <span className="text-sm font-medium text-zinc-700">Archive old project folders from NAS</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                  <span className="text-sm font-medium text-zinc-700">Update workspace security protocols</span>
-                </div>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {INITIAL_CATEGORIES.map((cat, idx) => (
+              <TaskCategoryCard
+                key={idx}
+                category={cat.category}
+                icon={cat.icon}
+                variant={cat.variant}
+                items={cat.items}
+              />
+            ))}
           </div>
         </div>
 
@@ -204,7 +155,7 @@ export default function TasksPage() {
             <span className="cursor-pointer hover:text-zinc-600">Terms</span>
           </div>
         </div>
-        </div>
+      </div>
     </AppLayout>
   );
 }
