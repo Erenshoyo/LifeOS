@@ -8,12 +8,8 @@ Life OS is a premium, offline-first productivity platform that replaces the chao
 
 ## 🔗 Links
 
-- **Live Demo:** [https://lifeos-yourname.vercel.app](https://lifeos-es.netlify.app)
-- **Repository:** [https://github.com/your-username/day-os-web](https://github.com/your-username/day-os-web)
-- **Portfolio:** [your-portfolio-link-here]
-
-> Replace the placeholders above with your actual deployed URL and repo link before publishing.
-
+- **Live Demo:** [https://lifeos-es.netlify.app](https://lifeos-es.netlify.app)
+- **Repository:** [[https://github.com/asif-shahriar-tauhid/LifeOS](https://github.com/your-username/day-os-web)]
 ---
 
 ## 📸 Preview
@@ -21,21 +17,6 @@ Life OS is a premium, offline-first productivity platform that replaces the chao
 ![Life OS Dashboard](./public/dashboard.png)
 
 *Dashboard view — today's tasks, habit streaks, and focus time at a glance.*
-
-<details>
-<summary>More screenshots</summary>
-
-![Focus Mode](./public/screenshot-focus-mode.png)
-*Focus Mode — Pomodoro timer with ambient sound picker and live analytics.*
-
-![Habits](./public/screenshot-habits.png)
-*Habits — weekly activity chart and per-habit streak tracking.*
-
-</details>
-
-> Add your own screenshots to the `public/` folder and update the paths above — a real image of the Dashboard or Focus Mode screen makes the strongest first impression.
-
----
 
 ## ✨ Features
 
