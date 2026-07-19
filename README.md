@@ -2,7 +2,38 @@
 
 > **"Your mind, unified. Your goals, realized."**
 
-Life OS is a premium, offline-first productivity platform that replaces the chaos of juggling multiple apps with one calm, editorial-grade dashboard. It integrates tasks, habits, journaling, goals, and deep-focus tools into a single intentional system.
+Life OS is a premium, offline-first productivity platform that replaces the chaos of juggling multiple apps with one calm, editorial-grade dashboard. It integrates tasks, habits, journaling, goals, and deep-focus tools into a single intentional system — built as a full-stack showcase of modern React/Next.js architecture, accessible UI patterns, and data-driven visualizations.
+
+---
+
+## 🔗 Links
+
+- **Live Demo:** [https://lifeos-yourname.vercel.app](https://lifeos-es.netlify.app)
+- **Repository:** [https://github.com/your-username/day-os-web](https://github.com/your-username/day-os-web)
+- **Portfolio:** [your-portfolio-link-here]
+
+> Replace the placeholders above with your actual deployed URL and repo link before publishing.
+
+---
+
+## 📸 Preview
+
+![Life OS Dashboard](./public/dashboard.png)
+
+*Dashboard view — today's tasks, habit streaks, and focus time at a glance.*
+
+<details>
+<summary>More screenshots</summary>
+
+![Focus Mode](./public/screenshot-focus-mode.png)
+*Focus Mode — Pomodoro timer with ambient sound picker and live analytics.*
+
+![Habits](./public/screenshot-habits.png)
+*Habits — weekly activity chart and per-habit streak tracking.*
+
+</details>
+
+> Add your own screenshots to the `public/` folder and update the paths above — a real image of the Dashboard or Focus Mode screen makes the strongest first impression.
 
 ---
 
@@ -65,6 +96,26 @@ All sections use **Framer Motion** for staggered scroll-in animations.
 | **Icons** | [Lucide React](https://lucide.dev/) |
 | **Typography** | Inter (body) + Manrope (headings) via `next/font/google` |
 | **Language** | TypeScript 5 |
+
+---
+
+## 📦 Key Dependencies
+
+| Package | Purpose |
+|---|---|
+| `next` | Framework — App Router, SSR/RSC |
+| `react` / `react-dom` | UI runtime |
+| `typescript` | Type safety |
+| `tailwindcss` | Utility-first styling |
+| `tw-animate-css` | Animation utilities for Tailwind |
+| `framer-motion` | Scroll and micro-animations |
+| `recharts` | Habit/focus bar charts |
+| `three` / `@react-three/fiber` / `@react-three/drei` | Antigravity particle background |
+| `lucide-react` | Icon set |
+| `@radix-ui/*` (via Shadcn) | Accessible UI primitives (dialogs, tooltips, etc.) |
+| `class-variance-authority` / `clsx` / `tailwind-merge` | Component variant + className utilities |
+
+> Run `npm list --depth=0` in the project root and replace this table with the real output for full accuracy — this list covers the libraries referenced in the feature descriptions above, but your actual `package.json` may include a few more (form handling, date utilities, linting, etc.).
 
 ---
 
@@ -146,7 +197,7 @@ brand-lightest #00663D   — Accent highlights
 ### Installation
 
 ```bash
-git clone https://github.com/your-repo/day-os-web.git
+git clone https://github.com/your-username/day-os-web.git
 cd day-os-web
 npm install
 ```
